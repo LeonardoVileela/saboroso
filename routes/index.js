@@ -1,5 +1,6 @@
 var conn = require('./../inc/db')
 var reservation = require('./../inc/reservation')
+var contact = require('./../inc/contact')
 var express = require('express');
 var router = express.Router();
 
@@ -27,6 +28,23 @@ router.get('/contact', function (req, res, next) {
   res.render('contact', {
     title: 'Restaurante Saboroso'
   });
+
+})
+
+router.post('/contact', function (req, res, next) {
+
+  contact.postContact(req.body).then(results => {
+    res.render('contact', {
+      title: 'Restaurante Saboroso',
+      success: 'Entraremos em contato o mais rápido possível'
+    })
+
+  }).catch(err => {
+    res.render('contact', {
+      title: 'Restaurante Saboroso',
+      error: err.toString()
+    })
+  })
 
 })
 
