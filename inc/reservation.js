@@ -4,11 +4,6 @@ module.exports = {
     postReservations(filds) {
         return new Promise((resolve, reject) => {
 
-            let data = filds.date.split('/');
-
-            filds.date = `${data[2]}-${data[1]}-${data[0]}`
-
-
             conn.query(`
             INSERT INTO tb_reservations(name, email, people, date, time)
             VALUES(?, ?, ?, ?, ?)

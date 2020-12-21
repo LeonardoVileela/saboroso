@@ -2,7 +2,7 @@ function verify() {
     nome = document.getElementById("inputName").value
     email = document.getElementById("inputEmail").value
     pessoas = document.getElementById("inputPeople").value
-    data = document.getElementById("inputDate").value
+    data = document.getElementById("example-date-input").value
     horas = document.getElementById("inputTime").value
     document.getElementById('submitReservation').type = '';
 

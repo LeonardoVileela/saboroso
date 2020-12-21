@@ -26,6 +26,43 @@ router.get('/', function (req, res, next) {
     }
   );
 });
+router.post('/', function (req, res, next) {
+
+  reservation.postReservations(req.body).then(results => {
+    conn.query(
+      'SELECT * FROM saboroso.tb_menus ORDER BY title;',
+      function (err, results) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.render('index', {
+            title: 'Restaurante Saboroso',
+            menus: results,
+            success: 'Reserva Realizada com sucesso'
+          })
+        }
+      }
+    )
+  }).catch(err => {
+    var errorMessage = err
+    conn.query(
+      'SELECT * FROM saboroso.tb_menus ORDER BY title;',
+      function (err, results) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.render('index', {
+            title: 'Restaurante Saboroso',
+            menus: results,
+            error: 'Reserva não realizada'
+
+          })
+        }
+      }
+    )
+  })
+
+});
 
 router.get('/contact', function (req, res, next) {
 
@@ -74,6 +111,7 @@ router.get('/reservation', function (req, res, next) {
 
 router.post('/reservation', function (req, res, next) {
 
+  
   reservation.postReservations(req.body).then(results => {
     res.render('reservation', {
       title: 'Restaurante Saboroso',
