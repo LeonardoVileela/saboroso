@@ -1,4 +1,5 @@
 var conn = require('./../inc/db')
+var users = require('./../inc/users')
 var express = require('express');
 var router = express.Router();
 
@@ -26,10 +27,24 @@ router.get('/emails', function (req, res, next) {
 
 })
 
+router.post('/login', function (req, res, next) {
+
+
+    users.login(req.body.email, req.body.password).then(user => {
+        req.session.user = user
+
+        res.redirect('/admin')
+
+    }).catch(err => {
+        res.render('admin/login', {
+            error: err.toString()
+        })
+    })
+
+})
+
 router.get('/login', function (req, res, next) {
 
-    if (!req.session.views) { req.session.views = 0 }
-    console.log(req.session.views++)
 
     res.render('admin/login', {
     });
